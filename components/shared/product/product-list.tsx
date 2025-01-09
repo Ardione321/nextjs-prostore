@@ -31,5 +31,4 @@ const ProductList = ({
 };
 
 export default ProductList;
-git config --global user.name "Ardione321"
-git config --global user.email "ardioned@gmail.com"
+
