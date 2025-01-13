@@ -51,3 +51,20 @@ export function round2(value: number | string) {
     throw new Error("Value is not a number or string");
   }
 }
+
+const CURRENT_FORMATTER = new Intl.NumberFormat('en-US', {
+  currency: 'USD',
+  style: 'currency',
+  minimumFractionDigits: 2
+})
+
+// Format curreny using formatter
+export function formatCurrency(amount: number | string | null) {
+  if (typeof amount === 'number'){
+    return CURRENT_FORMATTER.format(amount)
+  } else if (typeof amount === 'string') {
+    return CURRENT_FORMATTER.format(Number(amount))
+  } else {
+    return 'NaN'
+  }
+}
