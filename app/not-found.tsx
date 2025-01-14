@@ -20,7 +20,7 @@ const NotFoundPage = () => {
       />
       <div className="p-6 w-1/3 rounded-lg shadow text-center">
         <h1 className="text-3xl font-bold mb-4">Not Found</h1>
-        <p className="text-desctructive">Could not find requested page</p>
+        <p className="text-destructive">Could not find requested page</p>
         <Button
           variant="outline"
           className="mt-4 ml-2"
