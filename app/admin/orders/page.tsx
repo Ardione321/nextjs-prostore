@@ -1,8 +1,5 @@
-import { Metadata } from "next";
-import { getMyOrders } from "@/lib/actions/order.actions";
-import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
-// import { ShoppingCart } from "lucide-react";
-import Link from "next/link";
+import { auth } from "@/auth";
+import Paginations from "@/components/shared/pagination";
 import {
   Table,
   TableBody,
@@ -11,19 +8,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Paginations from "@/components/shared/pagination";
+import { deleteOrder, getAllOrders } from "@/lib/actions/order.actions";
+import { formatId, formatDateTime, formatCurrency } from "@/lib/utils";
+import Link from "next/link";
+import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
+import DeleteDialog from "@/components/shared/delete-diaglog";
 
 export const metadata: Metadata = {
-  title: "My Orders",
+  title: "Admin Orders",
 };
-const OrdersPage = async (props: {
+const AdminOrdersPage = async (props: {
   searchParams: Promise<{ page: string }>;
 }) => {
-  const { page } = await props.searchParams;
+  const { page = "1" } = await props.searchParams;
+  const session = await auth();
 
-  const orders = await getMyOrders({
-    page: Number(page) || 1,
+  if (session?.user?.role !== "admin")
+    throw new Error("User is not authorized");
+
+  const orders = await getAllOrders({
+    page: Number(page),
   });
 
   return (
@@ -63,6 +68,7 @@ const OrdersPage = async (props: {
                   <Button asChild variant="outline" size="sm">
                     <Link href={`/order/${order.id}`}>Details</Link>
                   </Button>
+                  <DeleteDialog id={order.id} action={deleteOrder} />
                 </TableCell>
               </TableRow>
             ))}
@@ -80,4 +86,4 @@ const OrdersPage = async (props: {
   );
 };
 
-export default OrdersPage;
+export default AdminOrdersPage;

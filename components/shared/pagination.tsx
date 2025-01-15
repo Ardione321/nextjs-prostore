@@ -26,14 +26,25 @@ const Paginations = ({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const handleClick = (btnType: string) => {
-    const pageValue = btnType === "next" ? Number(page) + 1 : Number(page) - 1;
+  const handleClick = (btnTypeOrPageNumber: string | number) => {
+    let pageValue: number;
+
+    // Determine if the input is a button type (e.g., "next", "prev") or a specific page number
+    if (typeof btnTypeOrPageNumber === "string") {
+      pageValue =
+        btnTypeOrPageNumber === "next" ? Number(page) + 1 : Number(page) - 1;
+    } else {
+      pageValue = btnTypeOrPageNumber; // Use the specific page number directly
+    }
+
+    // Generate the new URL with the updated page query parameter
     const newUrl = formUrlQuery({
       params: searchParams.toString(),
       key: urlParamName || "page",
       value: pageValue.toString(),
     });
 
+    // Navigate to the new URL
     router.push(newUrl);
   };
 
@@ -73,11 +84,17 @@ const Paginations = ({
           <PaginationItem>
             {numberOfPages.map((number) => (
               <PaginationLink
-                href={number !== page ? `?page=${number}` : undefined}
+                href="{number !== page ? `?page=${number}` : undefined}"
                 key={number}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClick(number);
+                }}
                 aria-disabled={Number(number) === page}
                 className={`px-4 py-2 border rounded-lg ${
-                  number === page ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-white text-black hover:bg-gray-100'
+                  number === page
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "bg-white text-black hover:bg-gray-100"
                 }`}
               >
                 {number}
