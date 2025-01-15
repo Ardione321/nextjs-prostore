@@ -13,7 +13,7 @@ import { formatId, formatDateTime, formatCurrency } from "@/lib/utils";
 import Link from "next/link";
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
-import DeleteDialog from "@/components/shared/delete-diaglog";
+import DeleteDialog from "@/components/shared/delete-dialog";
 
 export const metadata: Metadata = {
   title: "Admin Orders",

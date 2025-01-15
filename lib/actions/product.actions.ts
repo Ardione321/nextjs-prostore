@@ -30,6 +30,7 @@ export async function getProductById(productId: string) {
 }
 
 // Get all products
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getAllProducts({
   query,
   limit = PAGE_SIZE,

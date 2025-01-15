@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Paginations from "@/components/shared/pagination";
-import DeleteDialog from "@/components/shared/delete-diaglog";
+import DeleteDialog from "@/components/shared/delete-dialog";
 import Image from "next/image";
 
 const AdminProductPage = async (props: {
@@ -30,7 +30,7 @@ const AdminProductPage = async (props: {
     page,
     category,
   });
-  
+
   return (
     <div className="space-y-2">
       <div className="flex-between">
