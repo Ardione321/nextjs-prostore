@@ -27,7 +27,7 @@ export async function createUpdateReview(
         id: review.productId,
       },
     });
-    console.log(product);
+
     if (!product) throw new Error("Product not found");
 
     // Check if user already reviewed

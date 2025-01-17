@@ -59,7 +59,7 @@ PurchaseReceiptEmail.PreviewProps = {
     }
   }
 } satisfies OrderInformationProps
-console.log(process.env.NEXT_PUBLIC_SERVER_URL)
+
 const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium" });
 type OrderInformationProps = {
     order: Order
