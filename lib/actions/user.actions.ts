@@ -17,7 +17,6 @@ import { z } from "zod";
 import { PAGE_SIZE } from "../constants";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
-import { redirect } from "next/navigation";
 // Sign in the user with credentials
 export async function signInWithCredentials(
   prevState: unknown,
