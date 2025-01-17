@@ -14,6 +14,7 @@ import { BadgeDollarSign, CreditCard, Package, Users } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import Charts from "./charts";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -22,7 +23,7 @@ const AdminOverViewPage = async () => {
   const session = await auth();
 
   if (session?.user?.role !== "admin") {
-    throw new Error("User is not authorized");
+    redirect("/");
   }
 
   const summary = await getOrderSummary();
@@ -84,9 +85,11 @@ const AdminOverViewPage = async () => {
             <CardTitle>Overview</CardTitle>
           </CardHeader>
           <CardContent>
-            <Charts data={{
-                salesData: summary.salesData
-            }} />
+            <Charts
+              data={{
+                salesData: summary.salesData,
+              }}
+            />
           </CardContent>
         </Card>
         <Card className="col-span-3">

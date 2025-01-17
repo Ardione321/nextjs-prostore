@@ -14,6 +14,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import DeleteDialog from "@/components/shared/delete-dialog";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Admin Orders",
@@ -24,8 +25,9 @@ const AdminOrdersPage = async (props: {
   const { page = "1", query: searchText } = await props.searchParams;
   const session = await auth();
 
-  if (session?.user?.role !== "admin")
-    throw new Error("User is not authorized");
+  if (session?.user?.role !== "admin") {
+    redirect("/");
+  }
 
   const orders = await getAllOrders({
     page: Number(page),

@@ -14,7 +14,8 @@ import {
 import { formatId } from "@/lib/utils";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 export const metadata: Metadata = {
   title: "Admin Users",
 };
@@ -27,6 +28,11 @@ const AdminUserPage = async (props: {
 }) => {
   const { page = "1", query: searchText } = await props.searchParams;
   const users = await getAllUsers({ page: Number(page), query: searchText });
+  const session = await auth();
+
+  if (session?.user?.role !== "admin") {
+    redirect("/");
+  }
 
   return (
     <div className="space-y-2">

@@ -13,6 +13,12 @@ import {
 import Paginations from "@/components/shared/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog";
 import Image from "next/image";
+import { Metadata } from "next";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+export const metadata: Metadata = {
+  title: "Admin Products",
+};
 
 const AdminProductPage = async (props: {
   searchParams: Promise<{
@@ -21,6 +27,7 @@ const AdminProductPage = async (props: {
     category: string;
   }>;
 }) => {
+  const session = await auth();
   const searchParams = await props.searchParams;
   const page = Number(searchParams.page) || 1;
   const searchText = searchParams.query || "";
@@ -31,6 +38,11 @@ const AdminProductPage = async (props: {
     category,
   });
 
+  if (session?.user?.role !== "admin") {
+    redirect("/");
+  }
+
+  
   return (
     <div className="space-y-2">
       <div className="flex-between">
