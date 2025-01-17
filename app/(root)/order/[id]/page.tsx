@@ -33,6 +33,7 @@ const OrderDetailsPage = async (props: {
     });
     client_secret = paymentIntent.client_secret;
   }
+  
   return (
     <OrderDetailsTable
       order={{
