@@ -29,7 +29,7 @@ const Paginations = ({
 
   const handleClick = (btnTypeOrPageNumber: string | number) => {
     let pageValue: number;
-
+    console.log(numberOfPages)
     // Determine if the input is a button type (e.g., "next", "prev") or a specific page number
     if (typeof btnTypeOrPageNumber === "string") {
       pageValue =
