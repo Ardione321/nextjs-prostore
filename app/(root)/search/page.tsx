@@ -122,6 +122,8 @@ const SearchPage = async (props: {
     page: Number(page),
   });
 
+  console.log(products);
+
   const categories = await getAllCategories();
 
   return (

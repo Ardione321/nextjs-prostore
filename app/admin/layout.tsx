@@ -18,7 +18,7 @@ export default function AdminLayout({
           <div className="flex items-center h-24 px-4">
             <Link href="/" className="w-22">
               <Image
-                src="/images/logo.svg"
+                src="/images/suzy.jpg"
                 height={48}
                 width={48}
                 alt={APP_NAME}
@@ -26,7 +26,7 @@ export default function AdminLayout({
             </Link>
             <MainNav className="mx-8" />
             <div className="ml-auto items-center flex space-x-4">
-              <div>
+              <div className="hidden md:block">
                 <AdminSearch />
                 {/* <Input type="search" placeholder="Search..." className="md:w-[100] lg:w-[300]" /> */}
               </div>
@@ -34,7 +34,8 @@ export default function AdminLayout({
             </div>
           </div>
         </div>
-        <div className="flex-1 space-y-4 p-8 pt-6 container mx-auto border border-gray-300 rounded-xl mt-5 shadow-md">
+        <div className="flex-1 space-y-4 p-8 pt-6 container mx-auto">
+        {/* <div className="flex-1 space-y-4 p-8 pt-6 container mx-auto border border-gray-300 rounded-xl mt-5 shadow-md"> */}
           {children}
         </div>
       </div>

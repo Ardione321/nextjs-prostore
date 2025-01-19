@@ -25,6 +25,7 @@ const Paginations = ({
 }: PaginationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const currentPage = Number(page);
 
   const handleClick = (btnTypeOrPageNumber: string | number) => {
     let pageValue: number;
@@ -32,7 +33,7 @@ const Paginations = ({
     // Determine if the input is a button type (e.g., "next", "prev") or a specific page number
     if (typeof btnTypeOrPageNumber === "string") {
       pageValue =
-        btnTypeOrPageNumber === "next" ? Number(page) + 1 : Number(page) - 1;
+        btnTypeOrPageNumber === "next" ? currentPage + 1 : currentPage - 1;
     } else {
       pageValue = btnTypeOrPageNumber; // Use the specific page number directly
     }
@@ -47,6 +48,15 @@ const Paginations = ({
     // Navigate to the new URL
     router.push(newUrl);
   };
+
+  const maxDisplay = 10;
+  const startPage = Math.floor((currentPage - 1) / maxDisplay) * maxDisplay + 1;
+  const endPage = Math.min(startPage + maxDisplay - 1, totalPages);
+
+  const paginationNumbers = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, idx) => startPage + idx
+  );
 
   return (
     <div className="flex gap-2">
@@ -74,36 +84,40 @@ const Paginations = ({
             <PaginationPrevious
               href="#"
               onClick={() => handleClick("prev")}
-              aria-disabled={Number(page) <= 1}
-              tabIndex={Number(page) <= 1 ? -1 : undefined}
+              aria-disabled={currentPage <= 1}
+              tabIndex={currentPage <= 1 ? -1 : undefined}
               className={
-                Number(page) <= 1 ? "pointer-events-none opacity-50" : undefined
+                currentPage <= 1 ? "pointer-events-none opacity-50" : undefined
               }
             />
           </PaginationItem>
-          <PaginationItem>
-            {numberOfPages.map((number) => (
+          {paginationNumbers.map((number) => (
+            <PaginationItem key={number}>
               <PaginationLink
-                href="{number !== page ? `?page=${number}` : undefined}"
-                key={number}
+                href="#"
                 onClick={(e) => {
                   e.preventDefault();
                   handleClick(number);
                 }}
-                aria-disabled={Number(number) === page}
+                aria-disabled={number === currentPage}
                 className={`px-4 py-2 border rounded-lg ${
-                  number === page
+                  number === currentPage
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : "bg-white text-black hover:bg-gray-100"
                 }`}
               >
                 {number}
               </PaginationLink>
-            ))}
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
+            </PaginationItem>
+          ))}
+
+          {/* Ellipsis */}
+          {endPage < totalPages && (
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
+
           <PaginationItem>
             <PaginationNext
               href="#"

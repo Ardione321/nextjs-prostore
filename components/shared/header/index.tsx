@@ -13,7 +13,7 @@ const Header = () => {
           <CategoryDrawer />
           <Link href="/" className="flex-start ml-4">
             <Image
-              src="/images/logo.svg"
+              src="/images/suzy.jpg"
               alt={`${APP_NAME} logo`}
               height={48}
               width={48}
